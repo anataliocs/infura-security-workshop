@@ -2,7 +2,7 @@ pragma solidity ^0.4.19;
 
 // Updated contract to protect against re-entrancy attack
 
-contract EtherBankUpdated {
+contract EtherbankUpdated {
   mapping (address => uint) public balances;
     
   function deposit(address to) payable public {
