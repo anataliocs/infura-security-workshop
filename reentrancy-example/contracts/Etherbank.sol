@@ -6,7 +6,7 @@ contract Etherbank {
     mapping(address => uint256) public balances;
 
     function initialDeposit(address to) public {
-        balances[to] += 10;
+        balances[to] += 10 ether;
     }
 
     function deposit(address to) public payable {

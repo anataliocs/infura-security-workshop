@@ -33,9 +33,27 @@ Open up the truffle Console:
 truffle console
 ```
 
-Call the attack function:
+Get the deployed attack contract:
 ```
-let attackingContract = await AttackingContract.new()
-attackingContract.address
-attackingContract.attack()
+let attacker = await Attacker.new()
+```
+
+Get the deployed Etherbank contract:
+```
+let etherbank = await Etherbank.new()
+```
+
+Create a deposit for the attack on the Etherbank contract:
+```
+etherbank.initialDeposit(attacker.address)
+```
+
+Attack the Etherbank contract:
+```
+attacker.attack()
+```
+
+Get the new balance of the Attack contract:
+```
+let balance = await web3.eth.getBalance(attacker.address)
 ```

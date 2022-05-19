@@ -94,7 +94,7 @@ App = {
       var balance = await App.getDeposit(account);
       App.updateUI(balance);
 
-      let result = await attackerInstance.deposit({ from: account, gasPrice: 20000000000, gas: 6721975, value: 10 });
+      let result = await etherbankInstance.initialDeposit(attackerInstance.address, { from: account});
       console.log("Deposit in progress");
       balance = await App.getDeposit(account);
       App.updateUI(balance);
@@ -115,11 +115,14 @@ App = {
       var attackerInstance = await App.contracts.Attacker.deployed();
 
       console.log("Attacker address: " + attackerInstance.address);
-      attackerInstance.attack({ from: account });
-
       console.log("Attack in progress");
-      balance = await App.getDeposit(account, { from: account, gasPrice: 20000000000, gas: 6721975 });
-      App.updateUI(balance);
+      attackerInstance.attack({ from: account });
+    
+      //balance = await web3.eth.getBalance(attackerInstance.address)
+      //console.log("Attack Contract balance: " + balance + " ETH")
+
+      //balance = await web3.eth.getBalance(etherbankInstance.address)
+      //console.log("Etherbank Contract balance: " + balance + " ETH")
     });
   }
 };

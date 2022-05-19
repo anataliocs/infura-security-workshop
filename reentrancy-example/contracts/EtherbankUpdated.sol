@@ -3,24 +3,28 @@ pragma solidity ^0.4.19;
 // Updated contract to protect against re-entrancy attack
 
 contract EtherbankUpdated {
-  mapping (address => uint) public balances;
-    
-  function deposit(address to) payable public {
-    balances[to] += msg.value;
-  }
-    
-  function withdraw(uint amount) public {
-    if (balances[msg.sender]>= amount) {
-      require(msg.sender.call.value(amount)());
-      balances[msg.sender] -= amount;
+    mapping(address => uint256) public balances;
+
+    function initialDeposit(address to) public {
+        balances[to] += 10 ether;
     }
-  }  
 
-  function () payable public {
-    balances[msg.sender] += msg.value;
-  }
+    function deposit(address to) public payable {
+        balances[to] += msg.value;
+    }
 
-  function getBalance(address addr) view public returns(uint){
-    return balances[addr];
-  }
+    function withdraw(uint256 amount) public {
+        if (balances[msg.sender] >= amount) {
+            require(msg.sender.call.value(amount)());
+            balances[msg.sender] -= amount;
+        }
+    }
+
+    function() public payable {
+        balances[msg.sender] += msg.value;
+    }
+
+    function getBalance(address addr) public view returns (uint256) {
+        return balances[addr];
+    }
 }
