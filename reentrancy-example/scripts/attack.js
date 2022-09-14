@@ -8,7 +8,7 @@ const etherbankJson = require("../build/contracts/Etherbank.json");
 const etherbankUpdatedJson = require("../build/contracts/EtherbankUpdated.json");
 
 module.exports = async function (callback) {
-    const attack = false;
+    const attack = true;
 
     // web3 is injected by Truffle
     const contractAttacker = new web3.eth.Contract(
@@ -46,21 +46,20 @@ module.exports = async function (callback) {
 
     if (attack) {
 
-        console.log("Performing Attack");
+        console.log("\n Performing Attack");
         const attackTx = contractAttacker.methods.attack();
         await attackTx.send({
             from: (await web3.eth.getAccounts())[0]
         }).then(function (receipt) {
-            console.log("Attack Complete - " + receipt.transactionHash);
-            console.log();
+            console.log("Attack Complete - " + receipt.transactionHash + "/n");
         });
+
+        const attackerBalanceAfter = await web3.eth.getBalance(contractAttacker.options.address);
+        console.log("Attacker Contract Balance After Attack: " + web3.utils.fromWei(attackerBalanceAfter, 'ether') + " ETH");
+
+        const etherbankBalanceAfter = await web3.eth.getBalance(contractEtherbank.options.address);
+        console.log("Etherbank Contract Balance After Attack: " + web3.utils.fromWei(etherbankBalanceAfter, 'ether') + " ETH");
     }
-
-    const attackerBalanceAfter = await web3.eth.getBalance(contractAttacker.options.address);
-    console.log("Attacker Contract Balance After Attack: " + web3.utils.fromWei(attackerBalanceAfter, 'ether') + " ETH");
-
-    const etherbankBalanceAfter = await web3.eth.getBalance(contractEtherbank.options.address);
-    console.log("Etherbank Contract Balance After Attack: " + web3.utils.fromWei(etherbankBalanceAfter, 'ether') + " ETH");
 
     callback();
 };

