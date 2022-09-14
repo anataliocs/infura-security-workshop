@@ -18,6 +18,8 @@
   "dependencies": {
     "@drizzle/store": "^1.5.3",
     "@openzeppelin/contracts": "^4.5.0",
+    "@truffle/hdwallet-provider": "^2.0.14",
+    "dotenv": "^16.0.2",
     "web3-utils": "^1.7.3"
   }
 }

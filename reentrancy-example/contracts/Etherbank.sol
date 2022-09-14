@@ -5,12 +5,9 @@ pragma solidity ^0.4.19;
 contract Etherbank {
     mapping(address => uint256) public balances;
 
-    function initialDeposit(address to) public {
-        balances[to] += 10 ether;
-    }
-
-    function deposit(address to) public payable {
-        balances[to] += msg.value;
+    function deposit() public payable returns (uint256) {
+        balances[msg.sender] += msg.value;
+        return balances[msg.sender];
     }
 
     function withdraw(uint256 amount) public payable {
@@ -23,7 +20,7 @@ contract Etherbank {
         balances[msg.sender] += msg.value;
     }
 
-    function getBalance(address addr) public view returns (uint256) {
-        return balances[addr];
+    function getBalance() public view returns (uint256) {
+        return balances[msg.sender];
     }
 }

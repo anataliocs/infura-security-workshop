@@ -35,12 +35,12 @@ truffle console
 
 Get the deployed attack contract:
 ```
-let attacker = await Attacker.new()
+let attacker = await Attacker.deployed()
 ```
 
 Get the deployed Etherbank contract:
 ```
-let etherbank = await Etherbank.new()
+let etherbank = await Etherbank.deployed()
 ```
 
 Create a deposit for the attack on the Etherbank contract:
