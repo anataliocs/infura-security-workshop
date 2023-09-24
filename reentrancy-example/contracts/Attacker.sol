@@ -6,7 +6,6 @@ import "./Etherbank.sol";
 
 contract Attacker {
     Etherbank victim;
-    bool isAttack = false;
 
     constructor(address _etherbank) public {
         victim = Etherbank(_etherbank);
@@ -21,7 +20,6 @@ contract Attacker {
 
     function attack() public {
 
-        isAttack = true;
         victim.withdraw(10 ether);
     }
 
@@ -35,3 +33,4 @@ contract Attacker {
         }
     }
 }
+
