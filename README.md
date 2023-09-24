@@ -9,9 +9,6 @@ Clone this repository by running:
 $ git clone git@github.com:anataliocs/infura-security-workshop.git
 ```
 
-### Explanation of the Attacker Contract
-<iframe src="https://quizlet.com/830167477/match/embed?i=5cize0&x=1jj1" height="500" width="100%" style="border:0"></iframe>
-
 ### Config
 
 Basic Setup:
